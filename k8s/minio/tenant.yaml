@@ -1,0 +1,15 @@
+apiVersion: minio.min.io/v2
+kind: Tenant
+metadata:
+  name: minio-tenant
+  namespace: minio-tenant
+spec:
+  credsSecret:
+    name: minio-creds-secret
+  pools:
+    - servers: 4
+      name: pool-0
+      volumesPerServer: 1
+      size: 10Gi
+  mountPath: /export
+  requestAutoCert: false
