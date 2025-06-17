@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: iceberg-rest
+  namespace: iceberg
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: iceberg-rest
+  template:
+    metadata:
+      labels:
+        app: iceberg-rest
+    spec:
+      containers:
+        - name: rest
+          image: apache/iceberg-rest:latest
+          env:
+            - name: CATALOG_WAREHOUSE
+              value: s3://warehouse
+          ports:
+            - containerPort: 8181
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: iceberg-rest
+  namespace: iceberg
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /iceberg
+            pathType: Prefix
+            backend:
+              service:
+                name: iceberg-rest
+                port:
+                  number: 8181
