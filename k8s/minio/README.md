@@ -1,8 +1,11 @@
 # MinIO deployment
 
-1. Install the operator:
+1. Add the repository and install the operator:
 
    ```bash
+   helm repo add minio-operator https://operator.min.io/
+   helm repo update
+   
    helm install minio-operator minio-operator/minio-operator \
      -n minio-operator --create-namespace
    ```

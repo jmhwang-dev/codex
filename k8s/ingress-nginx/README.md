@@ -1,6 +1,13 @@
 # ingress-nginx
 
-Install the ingress controller via Helm:
+Add the repository and install the ingress controller via Helm:
+
+```bash
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+helm repo update
+```
+
+Then install the chart:
 
 ```bash
 helm install ingress-nginx ingress-nginx/ingress-nginx \

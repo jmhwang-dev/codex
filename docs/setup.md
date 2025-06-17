@@ -15,7 +15,14 @@ This guide outlines the steps required to bootstrap the three-node Kubernetes cl
 
 ## 1. Ingress-nginx installation
 
-Install using Helm:
+First add the repository and install using Helm:
+
+```bash
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+helm repo update
+```
+
+Install the chart:
 
 ```bash
 helm install ingress-nginx ingress-nginx/ingress-nginx \
@@ -33,9 +40,16 @@ curl http://<NODE_IP>:30880/healthz
 
 ## 2. MinIO operator and tenant
 
-1. Deploy the operator with Helm.
-2. Apply a Tenant custom resource configured for four nodes with `requestAutoCert: false`.
-3. Access the console and create the buckets `bronze`, `iceberg` and `warehouse`.
+Add the repository and deploy the operator:
+
+```bash
+helm repo add minio-operator https://operator.min.io/
+helm repo update
+helm install minio-operator minio-operator/minio-operator \
+  -n minio-operator --create-namespace
+```
+
+Next apply the Tenant custom resource configured for four nodes with `requestAutoCert: false` and create the buckets `bronze`, `iceberg` and `warehouse` via the console.
 
 The console is available at `http://<NODE_IP>:30880/minio`.
 
